@@ -1,6 +1,10 @@
-# Software Requirements Specification (SRS)
+# SRS for middleware - Qiuyu Chen
 ## Introduction
+This project is a genealogy software that helps people to view, organise and update their family tree.
+## Purpose
 The purpose of this project is to provide a cross-platform application for managing genealogical research.
+## Intended Audience
+For all those interested in genealogy.
 ## System Features and Requirements
 ### Non-functional Requirements:
 1. Create a database using the RootsMagic database design
