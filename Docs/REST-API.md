@@ -48,12 +48,19 @@ POST /file/database/create
 |  ----   | ---- | ---- |   ----   |    ----     |
 | database_name |String| query |required| The name of the database |
 | database_path |String|query|required|The path of the database file|
-* Success Response
-  - **Code:** 200
-  - **Content:**
-* Error Response
 * Example Request
+```shell
+http://3.9.172.108:8090/api/file/database/create?database_name=test&database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2F
+```
 * Example Response
+```json
+{
+  "success": true,
+  "code": 200,
+  "msg": "Success",
+  "data": null
+}
+```
 ### Open database
 Open a database file.
 #### URL
@@ -63,13 +70,19 @@ GET /file/database/open
 |  ----   | ---- | ---- |   ----   |    ----     |
 | database_name |String| query |required| The name of the database |
 | database_path |String|query|required|The path of the database file|
-* Success Response
-* Success Response
-  - **Code:** 200
-  - **Content:**
-* Error Response
 * Example Request
+```shell
+http://3.9.172.108:8090/api/file/database/open?database_name=test&database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2F
+```
 * Example Response
+```json
+{
+  "success": true,
+  "code": 200,
+  "msg": "Success",
+  "data": null
+}
+```
 
 ### Delete database
 Delete a database file.
@@ -80,12 +93,19 @@ POST /file/database/delete
 |  ----   | ---- | ---- |   ----   |    ----     |
 | database_name |String| query |required| The name of the database |
 | database_path |String|query|required|The path of the database file|
-* Success Response
-  - **Code:** 200
-  - **Content:**
-* Error Response
 * Example Request
+```shell
+http://3.9.172.108:8090/api/file/database/delete?database_name=test&database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2F
+```
 * Example Response
+```json
+{
+  "success": true,
+  "code": 200,
+  "msg": "Success",
+  "data": null
+}
+```
 
 ### Rename database
 Rename a database file.
@@ -97,12 +117,19 @@ POST /file/database/rename
 | old_name | String | query |required| The old name of the database |
 | new_name | String | query |required| The new name of the database |
 | database_path |String|query|required|The path of the database file|
-* Success Response
-  - **Code:** 200
-  - **Content:**
-* Error Response
 * Example Request
+```shell
+http://3.9.172.108:8090/api/file/database/rename?old_name=test&new_name=demo&database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2F
+```
 * Example Response
+```json
+{
+  "success": true,
+  "code": 200,
+  "msg": "Success",
+  "data": null
+}
+```
 
 ### Import GEDCOM file
 Import a GEDCOM file and parse it into a new database file.
