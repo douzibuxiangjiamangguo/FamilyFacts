@@ -1,7 +1,7 @@
 package uk.ac.chen.middleware.config;
 
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,11 +51,12 @@ public class SqliteConfig {
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(
             @Qualifier("dynamicDataSource") DynamicDataSource dataSource) throws Exception {
-        SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
+        MybatisSqlSessionFactoryBean sessionFactoryBean = new MybatisSqlSessionFactoryBean();
+        //SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource);
         sessionFactoryBean.setMapperLocations(
                 new PathMatchingResourcePatternResolver().
-                        getResources("classpath:mapper/*.xml"));
+                        getResources("classpath:mapper/**/*.xml"));
         return sessionFactoryBean.getObject();
 
     }

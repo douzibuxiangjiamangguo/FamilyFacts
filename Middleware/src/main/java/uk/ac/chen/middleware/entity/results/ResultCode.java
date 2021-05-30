@@ -11,8 +11,10 @@ public enum ResultCode {
     FAIL(4001, "Fail"),
 
     /* parameter error：1000～1999 */
-    PARAM_NOT_VALID(4001, "Parameter is invalid"),
-    PARAM_IS_BLANK(4002, "Parameter is null"),
+    PARAM_NOT_VALID(4002, "Parameter is invalid"),
+    PARAM_IS_BLANK(4003, "Parameter is null"),
+
+    PERSON_NOT_FOUND(4005, "Person not found"),
 
     /* File error */
     FILE_NOT_EXIST(4010, "This file does not exist"),

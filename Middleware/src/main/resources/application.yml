@@ -4,5 +4,9 @@ server:
     context-path: /api/
 
 # database configuration
-# middleware.sqlite.url: jdbc:sqlite:src/main/resources/sqlite/init.db
-middleware.sqlite.url: jdbc:sqlite:/home/ec2-user/FamilyFacts/sqlite/init.db
+middleware.sqlite.url: jdbc:sqlite:src/main/resources/sqlite/init.db
+# middleware.sqlite.url: jdbc:sqlite:/home/ec2-user/FamilyFacts/sqlite/init.db
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true

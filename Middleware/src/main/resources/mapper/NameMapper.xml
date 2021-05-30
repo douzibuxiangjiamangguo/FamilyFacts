@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="uk.ac.chen.middleware.mapper.NameMapper">
+    <resultMap type="uk.ac.chen.middleware.entity.NameEntity" id="NameMap">
+        <result property="nameId" column="NameID" jdbcType="INTEGER" />
+        <result property="ownerId" column="OwnerID" jdbcType="INTEGER" />
+        <result property="surname" column="Surname" jdbcType="VARCHAR" />
+        <result property="given" column="Given" jdbcType="VARCHAR" />
+        <result property="prefix" column="Prefix" jdbcType="VARCHAR" />
+        <result property="suffix" column="Suffix" jdbcType="VARCHAR" />
+        <result property="nickname" column="Nickname" jdbcType="VARCHAR" />
+        <result property="nameType" column="NameType" jdbcType="INTEGER" />
+        <result property="date" column="Date" jdbcType="VARCHAR" />
+        <result property="sortDate" column="SortDate" jdbcType="INTEGER" />
+        <result property="isPrimary" column="IsPrimary" jdbcType="INTEGER" />
+        <result property="isPrivate" column="IsPrivate" jdbcType="INTEGER" />
+        <result property="proof" column="Proof" jdbcType="INTEGER" />
+        <result property="editDate" column="EditDate" jdbcType="FLOAT" />
+        <result property="sentence" column="Sentence" jdbcType="VARCHAR" />
+        <result property="note" column="Note" jdbcType="VARCHAR" />
+        <result property="birthYear" column="BirthYear" jdbcType="INTEGER" />
+        <result property="deathYear" column="DeathYear" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="getNameByFullName" resultMap="NameMap">
+        SELECT * FROM NameTable nt WHERE nt.Surname = #{Surname} and Given = #{Given};
+    </select>
+</mapper>

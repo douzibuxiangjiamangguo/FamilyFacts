@@ -1,5 +1,7 @@
 package uk.ac.chen.middleware.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -19,20 +21,49 @@ public class PersonEntity implements Serializable{
 
     private static final long serialVersionUID = -5588317590401843397L;
 
+    @TableId("PersonID")
     private Integer personId;
+
+    @TableField("UniqueID")
     private String uniqueId;
+
+    @TableField("Sex")
     private Integer sex;
-    private Float editData;
+
+    @TableField("EditDate")
+    private Float editDate;
+
+    @TableField("ParentID")
     private Integer parentId;
+
+    @TableField("SpouseID")
     private Integer spouseId;
+
+    @TableField("Color")
     private Integer color;
+
+    @TableField("Relate1")
     private Integer relate1;
+
+    @TableField("Relate2")
     private Integer relate2;
+
+    @TableField("Flags")
     private Integer flags;
+
+    @TableField("Living")
     private Integer living;
+
+    @TableField("IsPrivate")
     private Integer isPrivate;
+
+    @TableField("Proof")
     private Integer proof;
+
+    @TableField("Bookmark")
     private Integer bookmark;
+
+    @TableField("Note")
     private String note;
 
 }
