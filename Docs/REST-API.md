@@ -91,7 +91,6 @@ POST /file/database/delete
 #### Parameters
 |  Name   | Type |  In  | Required | Description |
 |  ----   | ---- | ---- |   ----   |    ----     |
-| database_name |String| query |required| The name of the database |
 | database_path |String|query|required|The path of the database file|
 * Example Request
 ```shell
