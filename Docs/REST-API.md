@@ -48,11 +48,10 @@ POST /file/database/create
 #### Parameters
 |  Name   | Type |  In  | Required | Description |
 |  ----   | ---- | ---- |   ----   |    ----     |
-| database_name |String| query |required| The name of the database |
 | database_path |String|query|required|The path of the database file|
 * Example Request
 ```shell
-http://3.9.172.108:8090/api/file/database/create?database_name=test&database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2F
+http://3.9.172.108:8090/api/file/database/create?database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2Ftest.db
 ```
 * Example Response
 ```json
@@ -70,11 +69,10 @@ GET /file/database/open
 #### Parameters
 |  Name   | Type |  In  | Required | Description |
 |  ----   | ---- | ---- |   ----   |    ----     |
-| database_name |String| query |required| The name of the database |
 | database_path |String|query|required|The path of the database file|
 * Example Request
 ```shell
-http://3.9.172.108:8090/api/file/database/open?database_name=test&database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2F
+http://3.9.172.108:8090/api/file/database/open?database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2Finit.db
 ```
 * Example Response
 ```json
@@ -97,7 +95,7 @@ POST /file/database/delete
 | database_path |String|query|required|The path of the database file|
 * Example Request
 ```shell
-http://3.9.172.108:8090/api/file/database/delete?database_name=test&database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2F
+http://3.9.172.108:8090/api/file/database/delete?database_path=%2Fhome%2Fec2-user%2FFamilyFacts%2Fsqlite%2Ftest.db
 ```
 * Example Response
 ```json
@@ -263,20 +261,21 @@ http://3.9.172.108:8090/api/person/list
   "data": [
     {
       "personId": 1,
-      "uniqueId": "92D5A0FA583B4E5382B47F61EE9669CF07A3",
-      "sex": 0,
-      "editDate": 43357,
-      "parentId": 45,
-      "spouseId": 1,
-      "color": 0,
-      "relate1": 0,
-      "relate2": 0,
-      "flags": 0,
-      "living": 0,
-      "isPrivate": 0,
-      "proof": 0,
-      "bookmark": 0,
-      "note": ""
+      "firstName": "Jacob",
+      "lastName": "Henning",
+      "sex": "female",
+      "birth": 1633,
+      "death": 1704,
+      "address": " "
+    },
+    {
+      "personId": 2,
+      "firstName": "Jacob",
+      "lastName": "Henning",
+      "sex": "female",
+      "birth": 1678,
+      "death": 1770,
+      "address": " "
     }
   ]
 }
@@ -291,30 +290,44 @@ POST /person/create
 | first_name | String |body |required| The first name of the person |
 | last_name | String |body|required|The last name of the person|
 | sex | String |body|required|The sex of the person|
-| parent_id | Integer |body|optional|Parents of the person|
-| spouse_id | Integer |body|optional|The spouse of the person|
-* Success Response
-  - **Code:** 200
-  - **Content:**
-* Error Response
+| birth | Integer |body|required|Birth of the person|
+| death | Integer |body|required|Death the person|
+| address | String |body|required|The address of the person|
 * Example Request
+```shell
+http://3.9.172.108:8090/api/person/create?first_name=test1&last_name=test11&sex=1&birth=1920&death=2000&address=Newcastle
+```
 * Example Response
+```json
+{
+  "success": true,
+  "code": 200,
+  "msg": "Success",
+  "data": null
+}
+```
 
 ### Delete person
 Delele a person.
 #### URL
-POST /person/delete
+POST /person/delete/{person_id}
 #### Parameters
 |  Name   | Type |  In  | Required | Description |
 |  ----   | ---- | ---- |   ----   |    ----     |
-| first_name | String |query |required| The first name of the person |
-| last_name | String |query|required|The last name of the person|
-* Success Response
-  - **Code:** 200
-  - **Content:**
-* Error Response
+| person_id | Integer |path |required| The id of the person |
 * Example Request
+```shell
+http://3.9.172.108:8090/api/person/delete/135
+```
 * Example Response
+```json
+{
+  "success": true,
+  "code": 200,
+  "msg": "Success",
+  "data": null
+}
+```
 
 ### Update person
 Update a person.
@@ -352,22 +365,14 @@ http://3.9.172.108:8090/api/person/search?first_name=Wilhelm%20Friederich&last_n
   "code": 200,
   "msg": "Success",
   "data": {
-    "personId": 7,
-    "uniqueId": "6B810C551EB64501A2515B6B93221F5E52FB",
-    "sex": 0,
-    "editDate": 43351,
-    "parentId": 6,
-    "spouseId": 7,
-    "color": 0,
-    "relate1": 0,
-    "relate2": 0,
-    "flags": 0,
-    "living": 0,
-    "isPrivate": 0,
-    "proof": 0,
-    "bookmark": 0,
-    "note": ""
-  }
+      "personId": 7,
+      "firstName": "Wilhelm Friederich",
+      "lastName": "Henning",
+      "sex": "female",
+      "birth": 1853,
+      "death": 1915,
+      "address": " "
+    }
 }
 ```
 ### Search person by id
@@ -389,21 +394,13 @@ http://3.9.172.108:8090/api/person/search/7
   "code": 200,
   "msg": "Success",
   "data": {
-    "personId": 7,
-    "uniqueId": "6B810C551EB64501A2515B6B93221F5E52FB",
-    "sex": 0,
-    "editDate": 43351,
-    "parentId": 6,
-    "spouseId": 7,
-    "color": 0,
-    "relate1": 0,
-    "relate2": 0,
-    "flags": 0,
-    "living": 0,
-    "isPrivate": 0,
-    "proof": 0,
-    "bookmark": 0,
-    "note": ""
-  }
+      "personId": 7,
+      "firstName": "Wilhelm Friederich",
+      "lastName": "Henning",
+      "sex": "female",
+      "birth": 1853,
+      "death": 1915,
+      "address": " "
+    }
 }
 ```
