@@ -31,4 +31,9 @@ public class NameServiceImpl implements NameService {
         return nameMapper.selectOne(queryWrapper);
     }
 
+    @Override
+    public boolean addName(NameEntity nameEntity) {
+        return nameMapper.insert(nameEntity) > 0;
+    }
+
 }

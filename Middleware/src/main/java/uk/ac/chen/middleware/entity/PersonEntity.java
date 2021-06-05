@@ -1,5 +1,6 @@
 package uk.ac.chen.middleware.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -21,12 +22,16 @@ public class PersonEntity implements Serializable{
 
     private static final long serialVersionUID = -5588317590401843397L;
 
-    @TableId("PersonID")
+    @TableId(value = "PersonID", type = IdType.AUTO)
     private Integer personId;
 
     @TableField("UniqueID")
     private String uniqueId;
 
+    /**
+     * 0 - male
+     * 1 - female
+     */
     @TableField("Sex")
     private Integer sex;
 

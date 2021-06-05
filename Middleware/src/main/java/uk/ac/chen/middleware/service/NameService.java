@@ -21,4 +21,11 @@ public interface NameService {
      * @return NameEntity
      */
     NameEntity getNameEntityByPersonId(Integer personId);
+
+    /**
+     * Add name
+     * @param nameEntity
+     * @return
+     */
+    boolean addName(NameEntity nameEntity);
 }

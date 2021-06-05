@@ -2,6 +2,12 @@ server:
   port: 8090
   servlet:
     context-path: /api/
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 1
+      minimum-idle: 1
+      auto-commit: true
 
 # database configuration
 middleware.sqlite.url: jdbc:sqlite:src/main/resources/sqlite/init.db
@@ -10,3 +16,4 @@ middleware.sqlite.url: jdbc:sqlite:src/main/resources/sqlite/init.db
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+    use-generated-keys: true

@@ -13,7 +13,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     private volatile static DynamicDataSource dynamicDataSource;
 
-    private  final Map<Object,Object> dataSourceMap = new ConcurrentHashMap<>();
+    private final Map<Object,Object> dataSourceMap = new ConcurrentHashMap<>();
 
     private final ThreadLocal<String> contextHolder = new ThreadLocal<>();
 
@@ -72,7 +72,6 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     public static void checkoutDataSource(String databaseKey) {
         if (dynamicDataSource != null) {
-            // 切换数据源
             setDataSourceKey(databaseKey);
             dynamicDataSource.afterPropertiesSet();
         }

@@ -2,6 +2,7 @@ package uk.ac.chen.middleware.entity.results;
 
 /**
  * Definition of ReturnCode
+ * @author Qiuyu
  */
 public enum ResultCode {
     /* success */

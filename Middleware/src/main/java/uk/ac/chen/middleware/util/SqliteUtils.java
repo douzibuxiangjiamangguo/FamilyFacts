@@ -35,7 +35,7 @@ public class SqliteUtils {
             String sql = "";
             InputStreamReader isr = null;
             try {
-                ClassPathResource classPathResource = new ClassPathResource("classpath:sqlite/init.sql");
+                ClassPathResource classPathResource = new ClassPathResource("sqlite/init.sql");
                 isr = new InputStreamReader(classPathResource.getInputStream(), "UTF-8");
                 BufferedReader bf = new BufferedReader(isr);
                 String content = "";
@@ -133,7 +133,9 @@ public class SqliteUtils {
     public static String getDataSourceUrl(String databaseName, String databasePath) {
         StringBuilder dataSourceUrl = new StringBuilder("jdbc:sqlite:");
         dataSourceUrl.append(databasePath);
-        dataSourceUrl.append(databaseName);
+        if (databaseName != null && !"".equals(databaseName)) {
+            dataSourceUrl.append(databaseName);
+        }
         if (!databasePath.endsWith(".db")) {
             dataSourceUrl.append(".db");
         }

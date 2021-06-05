@@ -1,6 +1,7 @@
 package uk.ac.chen.middleware.service;
 
 import uk.ac.chen.middleware.entity.PersonEntity;
+import uk.ac.chen.middleware.entity.vo.PersonVO;
 
 import java.util.List;
 
@@ -11,10 +12,16 @@ public interface PersonService {
 
     /**
      * Add a person
-     * @param person person entity
-     * @return Ture if successful
+     * @param firstName first name
+     * @param lastName last name
+     * @param sex
+     * @param birthYear
+     * @param deathYear
+     * @param address
+     * @return person id
      */
-    boolean addPerson(PersonEntity person);
+    int addPerson(String firstName, String lastName, Integer sex,
+                  Integer birthYear, Integer deathYear, String address);
 
     /**
      * Get person by full name
@@ -32,8 +39,22 @@ public interface PersonService {
     PersonEntity getPersonById(Integer personId);
 
     /**
+     * Get personVo by id
+     * @param personId id
+     * @return PersonVO
+     */
+    PersonVO getPersonVOById(Integer personId);
+
+    /**
      * List All persons
      * @return
      */
     List<PersonEntity> listPersons();
+
+    /**
+     * Delete person by id
+     * @param personId
+     * @return
+     */
+    int deletePersonById(Integer personId);
 }

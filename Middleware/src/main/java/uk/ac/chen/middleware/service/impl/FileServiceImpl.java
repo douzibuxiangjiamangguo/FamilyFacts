@@ -31,6 +31,8 @@ public class FileServiceImpl implements FileService {
             logger.debug("An error occurred during create database: {}", e.getMessage());
             e.printStackTrace();
         }
+        String[] strs = databasePath.split("/");
+        databaseName = strs[strs.length - 1];
         DynamicDataSource.addDataSource(databaseName, dataSource);
     }
 
@@ -38,6 +40,8 @@ public class FileServiceImpl implements FileService {
     public boolean openDatabase(String databaseName, String databasePath) {
         String dataSourceUrl = SqliteUtils.getDataSourceUrl(databaseName, databasePath);
         String filePath = SqliteUtils.getFilePath(dataSourceUrl);
+        String[] strs = databasePath.split("/");
+        databaseName = strs[strs.length - 1];
         if (!SqliteUtils.checkSqliteFileExists(filePath)) {
             return false;
         }

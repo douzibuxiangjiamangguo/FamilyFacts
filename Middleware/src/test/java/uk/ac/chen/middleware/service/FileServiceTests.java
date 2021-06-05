@@ -16,18 +16,17 @@ public class FileServiceTests {
 
     @Test
     void testCreateDatabase() {
-        String databaseName = "fileTest";
+        String databaseName = "";
         String databasePath = "/Users/chen/Desktop/Newcastle/Dissertation/" +
-                "code/FamilyFacts/Middleware/src/main/resources/sqlite/";
+                "code/FamilyFacts/Middleware/src/main/resources/sqlite/fileTest.db";
         fileService.createDatabase(databaseName, databasePath);
     }
 
     @Test
     void testOpenDatabase() {
-        String databaseName = "fileTest";
         String databasePath = "/Users/chen/Desktop/Newcastle/Dissertation/" +
-                "code/FamilyFacts/Middleware/src/main/resources/sqlite/";
-        Assertions.assertTrue(fileService.openDatabase(databaseName, databasePath));
+                "code/FamilyFacts/Middleware/src/main/resources/sqlite/init.db";
+        Assertions.assertTrue(fileService.openDatabase(null, databasePath));
     }
 
     @Test
@@ -41,10 +40,9 @@ public class FileServiceTests {
 
     @Test
     void testDeleteDatabase() {
-        String databaseName = "newFileTest";
         String databasePath = "/Users/chen/Desktop/Newcastle/Dissertation/" +
-                "code/FamilyFacts/Middleware/src/main/resources/sqlite/";
-        Assertions.assertTrue(fileService.deleteDatabase(databaseName, databasePath));
+                "code/FamilyFacts/Middleware/src/main/resources/sqlite/fileTest.db";
+        Assertions.assertTrue(fileService.deleteDatabase(null, databasePath));
     }
 
 }

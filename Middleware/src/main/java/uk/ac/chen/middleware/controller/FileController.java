@@ -23,23 +23,20 @@ public class FileController {
     private FileService fileService;
 
     @PostMapping("database/create")
-    public JsonResult createDatabase(@RequestParam("database_name") String databaseName,
-                                     @RequestParam("database_path") String databasePath) {
-        fileService.createDatabase(databaseName, databasePath);
+    public JsonResult createDatabase(@RequestParam("database_path") String databasePath) {
+        fileService.createDatabase(null, databasePath);
         return Result.success();
     }
 
     @PostMapping("database/open")
-    public JsonResult openDatabase(@RequestParam("database_name") String databaseName,
-                                   @RequestParam("database_path") String databasePath) {
-        return fileService.openDatabase(databaseName, databasePath) ?
+    public JsonResult openDatabase(@RequestParam("database_path") String databasePath) {
+        return fileService.openDatabase(null, databasePath) ?
                 Result.success() : Result.fail(ResultCode.FILE_NOT_EXIST);
     }
 
     @PostMapping("database/delete")
-    public JsonResult deleteDatabase(@RequestParam("database_name") String databaseName,
-                                     @RequestParam("database_path") String databasePath) {
-        return fileService.deleteDatabase(databaseName, databasePath) ?
+    public JsonResult deleteDatabase(@RequestParam("database_path") String databasePath) {
+        return fileService.deleteDatabase(null, databasePath) ?
                 Result.success() : Result.fail();
     }
 

@@ -1,5 +1,6 @@
 package uk.ac.chen.middleware.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -21,7 +22,15 @@ public class NameEntity implements Serializable {
 
     private static final long serialVersionUID = 4868919946414959671L;
 
-    @TableId("NameID")
+    public NameEntity(String given, String surname, Integer ownerId, Integer birthYear, Integer deathYear) {
+        this.surname = surname;
+        this.given = given;
+        this.ownerId = ownerId;
+        this.birthYear = birthYear;
+        this.deathYear = deathYear;
+    }
+
+    @TableId(value = "NameID", type = IdType.AUTO)
     private Integer nameId;
 
     @TableField("OwnerID")

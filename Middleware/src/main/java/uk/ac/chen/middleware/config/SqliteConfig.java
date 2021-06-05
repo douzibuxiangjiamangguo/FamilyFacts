@@ -13,6 +13,7 @@ import uk.ac.chen.middleware.util.SqliteBuilder;
 import uk.ac.chen.middleware.util.SqliteUtils;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -35,11 +36,19 @@ public class SqliteConfig {
         //Try to create sqlite file - if it does not exist
         SqliteUtils.initSqliteFile(SqliteUtils.getFilePath(dataSourceUrl));
         DataSource dataSource = SqliteBuilder.create().url(dataSourceUrl).build();
+        Connection connection = null;
         try {
             //Try to initialise the database
-            SqliteUtils.initDb(dataSource.getConnection());
+            connection = dataSource.getConnection();
+            SqliteUtils.initDb(connection);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return dataSource;
     }
