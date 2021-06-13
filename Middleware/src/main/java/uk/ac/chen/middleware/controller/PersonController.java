@@ -34,6 +34,45 @@ public class PersonController {
         return Result.success();
     }
 
+    @PostMapping("create/spouse")
+    public JsonResult addSpouse(@RequestParam("person_id") Integer personId,
+                                @RequestParam("first_name") String firstName,
+                                @RequestParam("last_name") String lastName,
+                                @RequestParam("sex") String sex,
+                                @RequestParam("birth") Integer birth,
+                                @RequestParam("death") Integer death,
+                                @RequestParam("address") String address) {
+        int sexCode = "male".equals(sex) ? 0 : 1;
+        int id = personService.addSpouse(personId, firstName, lastName, sexCode, birth, death, address);
+        return id >= 0 ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
+    }
+
+    @PostMapping("create/father")
+    public JsonResult addFather(@RequestParam("person_id") Integer personId,
+                                @RequestParam("first_name") String firstName,
+                                @RequestParam("last_name") String lastName,
+                                @RequestParam("sex") String sex,
+                                @RequestParam("birth") Integer birth,
+                                @RequestParam("death") Integer death,
+                                @RequestParam("address") String address) {
+        int sexCode = "male".equals(sex) ? 0 : 1;
+        int id = personService.addFather(personId, firstName, lastName, sexCode, birth, death, address);
+        return id >= 0 ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
+    }
+
+    @PostMapping("create/mother")
+    public JsonResult addMother(@RequestParam("person_id") Integer personId,
+                                @RequestParam("first_name") String firstName,
+                                @RequestParam("last_name") String lastName,
+                                @RequestParam("sex") String sex,
+                                @RequestParam("birth") Integer birth,
+                                @RequestParam("death") Integer death,
+                                @RequestParam("address") String address) {
+        int sexCode = "male".equals(sex) ? 0 : 1;
+        int id = personService.addMother(personId, firstName, lastName, sexCode, birth, death, address);
+        return id >= 0 ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
+    }
+
 
     @GetMapping("search")
     public JsonResult<PersonVO> getPersonByFullName(@RequestParam("first_name") String firstName,
@@ -68,7 +107,7 @@ public class PersonController {
         return Result.success(personVos);
     }
 
-    @GetMapping("delete/{person_id}")
+    @PostMapping("delete/{person_id}")
     public JsonResult deletePersonById(@PathVariable("person_id") Integer personId) {
         if (personService.deletePersonById(personId) > 0) {
             return Result.success();

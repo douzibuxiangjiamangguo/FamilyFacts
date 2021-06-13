@@ -24,6 +24,48 @@ public interface PersonService {
                   Integer birthYear, Integer deathYear, String address);
 
     /**
+     * Add person's spouse
+     * @param personId the person to whom the spouse has been added
+     * @param firstName first name
+     * @param lastName last name
+     * @param sex
+     * @param birthYear
+     * @param deathYear
+     * @param address
+     * @return person id
+     */
+    int addSpouse(Integer personId, String firstName, String lastName, Integer sex,
+                  Integer birthYear, Integer deathYear, String address);
+
+    /**
+     * Add person's father
+     * @param personId the person to whom the father has been added
+     * @param firstName first name
+     * @param lastName last name
+     * @param sex
+     * @param birthYear
+     * @param deathYear
+     * @param address
+     * @return person id
+     */
+    int addFather(Integer personId, String firstName, String lastName, Integer sex,
+                  Integer birthYear, Integer deathYear, String address);
+
+    /**
+     * Add person's mother
+     * @param personId the person to whom the mother has been added
+     * @param firstName first name
+     * @param lastName last name
+     * @param sex
+     * @param birthYear
+     * @param deathYear
+     * @param address
+     * @return person id
+     */
+    int addMother(Integer personId, String firstName, String lastName, Integer sex,
+                  Integer birthYear, Integer deathYear, String address);
+
+    /**
      * Get person by full name
      * @param firstName first name
      * @param lastName last name

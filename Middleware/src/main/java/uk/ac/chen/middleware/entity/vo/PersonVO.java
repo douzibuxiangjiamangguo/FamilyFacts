@@ -16,6 +16,8 @@ public class PersonVO {
     private Integer death;
     private String address;
 
+    public PersonVO() {}
+
     public PersonVO(Integer personId, String firstName, String lastName, String sex,
                     Integer birth, Integer death, String address) {
         this.personId = personId;
