@@ -23,6 +23,9 @@ public class FamilyController {
 
     @GetMapping("tree/{person_id}")
     public JsonResult<FamilyVO> getFamilyTreeByPersonId(@PathVariable("person_id") Integer personId) {
+        if (personId == null) {
+            return Result.fail(ResultCode.PARAM_NOT_VALID);
+        }
         FamilyVO familyTree = familyService.getFamilyTreeByPersonId(personId);
         if (familyTree == null || familyTree.getPersonId() == null) {
             return Result.fail(ResultCode.PERSON_NOT_FOUND);

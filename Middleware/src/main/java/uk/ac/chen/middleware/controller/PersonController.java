@@ -73,16 +73,40 @@ public class PersonController {
         return id >= 0 ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
     }
 
+    @PostMapping("update/father")
+    public JsonResult updateFatherOfPerson(@RequestParam("person_id") Integer personId,
+                                           @RequestParam("father_id") Integer fatherId) {
+        int id = personService.updateFatherOfPerson(personId, fatherId);
+        return id >= 0 ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
+    }
+
+    @PostMapping("update/mother")
+    public JsonResult updateMotherOfPerson(@RequestParam("person_id") Integer personId,
+                                           @RequestParam("mother_id") Integer fatherId) {
+        int id = personService.updateMotherOfPerson(personId, fatherId);
+        return id >= 0 ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
+    }
+
+    @PostMapping("update/spouse")
+    public JsonResult updateSpouseOfPerson(@RequestParam("person_id") Integer personId,
+                                           @RequestParam("spouse_id") Integer fatherId) {
+        int id = personService.updateSpouseOfPerson(personId, fatherId);
+        return id >= 0 ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
+    }
+
 
     @GetMapping("search")
-    public JsonResult<PersonVO> getPersonByFullName(@RequestParam("first_name") String firstName,
+    public JsonResult<List<PersonVO>> getPersonByFullName(@RequestParam("first_name") String firstName,
                                                     @RequestParam("last_name") String lastName) {
-        PersonEntity personEntity = personService.getPersonByFullName(firstName, lastName);
-        PersonVO personVo = personService.getPersonVOById(personEntity.getPersonId());
-        if (personVo.getPersonId() == null) {
+        List<PersonEntity> persons = personService.getPersonByFullName(firstName, lastName);
+        List<PersonVO> personVos = new ArrayList<>();
+        for (PersonEntity person : persons) {
+            personVos.add(personService.getPersonVOById(person.getPersonId()));
+        }
+        if (personVos.size() == 0) {
             return Result.fail(ResultCode.PERSON_NOT_FOUND);
         } else {
-            return Result.success(personVo);
+            return Result.success(personVos);
         }
     }
 

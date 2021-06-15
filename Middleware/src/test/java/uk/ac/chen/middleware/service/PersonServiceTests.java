@@ -1,12 +1,12 @@
 package uk.ac.chen.middleware.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import uk.ac.chen.middleware.entity.PersonEntity;
 import uk.ac.chen.middleware.entity.vo.PersonVO;
-import uk.ac.chen.middleware.mapper.PersonMapper;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,18 +23,39 @@ public class PersonServiceTests {
     @Resource
     private PersonService personService;
 
-    @Resource
-    private PersonMapper personMapper;
-
     @Test
     void testAddPerson() {
         String firstName = "test";
-        String lastName = "person";
+        String lastName = "mother";
         Integer sex = 0;
         Integer birthYear = 1920;
         Integer deathYear = 2010;
         String address = "Newcastle";
         personService.addPerson(firstName, lastName, sex, birthYear, deathYear, address);
+    }
+
+    @Test
+    void testUpdateSpouse() {
+        Integer personId = 135;
+        Integer spouseId = 136;
+        int id = personService.updateSpouseOfPerson(personId, spouseId);
+        Assertions.assertEquals(spouseId, id);
+    }
+
+    @Test
+    void testUpdateFather() {
+        Integer personId = 135;
+        Integer fatherId = 137;
+        int id = personService.updateFatherOfPerson(personId, fatherId);
+        Assertions.assertTrue(id >= 0);
+    }
+
+    @Test
+    void testUpdateMother() {
+        Integer personId = 135;
+        Integer motherId = 138;
+        int id = personService.updateMotherOfPerson(personId, motherId);
+        Assertions.assertTrue(id >= 0);
     }
 
     @Test
@@ -77,8 +98,8 @@ public class PersonServiceTests {
     void testSearchPerson() {
         String firstName = "test";
         String lastName = "add2";
-        PersonEntity personEntity = personService.getPersonByFullName(firstName, lastName);
-        logger.info("personEntity: {}", personEntity);
+        List<PersonEntity> persons = personService.getPersonByFullName(firstName, lastName);
+        logger.info("persons: {}", persons);
     }
 
     @Test

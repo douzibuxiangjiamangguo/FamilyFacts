@@ -7,6 +7,7 @@ import uk.ac.chen.middleware.mapper.NameMapper;
 import uk.ac.chen.middleware.service.NameService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author: Qiuyu
@@ -18,10 +19,10 @@ public class NameServiceImpl implements NameService {
     private NameMapper nameMapper;
 
     @Override
-    public NameEntity getNameEntityByFullName(String firstName, String lastName) {
+    public List<NameEntity> getNameListByFullName(String firstName, String lastName) {
         QueryWrapper<NameEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("Surname", lastName).eq("Given", firstName);
-        return nameMapper.selectOne(queryWrapper);
+        return nameMapper.selectList(queryWrapper);
     }
 
     @Override

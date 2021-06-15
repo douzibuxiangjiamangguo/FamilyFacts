@@ -10,6 +10,7 @@ import uk.ac.chen.middleware.service.NameService;
 import uk.ac.chen.middleware.service.PersonService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,76 +67,38 @@ public class PersonServiceImpl implements PersonService {
     public int addSpouse(Integer personId, String firstName, String lastName, Integer sex,
                          Integer birthYear, Integer deathYear, String address) {
         int spouseId = addPerson(firstName, lastName, sex,birthYear, deathYear, address);
-        PersonEntity personEntity = getPersonById(personId);
-        if (personEntity == null || !personEntity.getPersonId().equals(personId)) {
-            return -1;
-        }
-        personEntity.setSpouseId(spouseId);
-        personMapper.updateById(personEntity);
-
-        PersonEntity spouseEntity = getPersonById(spouseId);
-        spouseEntity.setSpouseId(personId);
-        personMapper.updateById(spouseEntity);
-        return spouseId;
+        return updateSpouseOfPerson(personId, spouseId);
     }
 
     @Override
     public int addFather(Integer personId, String firstName, String lastName, Integer sex,
                          Integer birthYear, Integer deathYear, String address) {
         int fatherId = addPerson(firstName, lastName, sex, birthYear, deathYear, address);
-        PersonEntity personEntity = getPersonById(personId);
-        if (personEntity == null || !personEntity.getPersonId().equals(personId)) {
-            return -1;
-        }
-
-        FamilyEntity familyEntity;
-        if (personEntity.getParentId() == null) {
-            familyEntity = new FamilyEntity();
-            familyEntity.setFatherId(fatherId);
-            familyMapper.insert(familyEntity);
-
-            personEntity.setParentId(familyEntity.getFamilyId());
-            personMapper.updateById(personEntity);
-        } else {
-            familyEntity = familyService.getFamilyByFamilyId(personEntity.getParentId());
-            familyEntity.setFatherId(fatherId);
-            familyMapper.updateById(familyEntity);
-        }
-        return familyEntity.getFamilyId();
+        return updateFatherOfPerson(personId, fatherId);
     }
 
     @Override
     public int addMother(Integer personId, String firstName, String lastName, Integer sex,
                          Integer birthYear, Integer deathYear, String address) {
         int motherId = addPerson(firstName, lastName, sex,birthYear, deathYear, address);
-        PersonEntity personEntity = getPersonById(personId);
-        if (personEntity == null || !personEntity.getPersonId().equals(personId)) {
-            return -1;
-        }
-
-        FamilyEntity familyEntity;
-        if (personEntity.getParentId() == null) {
-            familyEntity = new FamilyEntity();
-            familyEntity.setMotherId(motherId);
-            familyMapper.insert(familyEntity);
-
-            personEntity.setParentId(familyEntity.getFamilyId());
-            personMapper.updateById(personEntity);
-        } else {
-            familyEntity = familyService.getFamilyByFamilyId(personEntity.getParentId());
-            familyEntity.setMotherId(motherId);
-            familyMapper.updateById(familyEntity);
-        }
-        return familyEntity.getFamilyId();
+        return updateMotherOfPerson(personId, motherId);
     }
 
+
+
     @Override
-    public PersonEntity getPersonByFullName(String firstName, String lastName) {
-        NameEntity nameEntity = nameService.getNameEntityByFullName(firstName, lastName);
-        if (nameEntity == null || nameEntity.getOwnerId() == null) {
-            return new PersonEntity();
+    public List<PersonEntity> getPersonByFullName(String firstName, String lastName) {
+        List<PersonEntity> persons = new ArrayList<>();
+        List<NameEntity> names = nameService.getNameListByFullName(firstName, lastName);
+        for (NameEntity name : names) {
+            if (name == null || name.getOwnerId() == null) {
+                continue;
+            } else {
+                persons.add(getPersonById(name.getOwnerId()));
+            }
         }
-        return getPersonById(nameEntity.getOwnerId());
+
+        return persons;
     }
 
     @Override
@@ -212,5 +175,66 @@ public class PersonServiceImpl implements PersonService {
         }
 
         return personMapper.deleteById(personId);
+    }
+
+    @Override
+    public int updateFatherOfPerson(Integer personId, Integer fatherId) {
+        PersonEntity personEntity = getPersonById(personId);
+        if (personEntity == null || !personEntity.getPersonId().equals(personId)) {
+            return -1;
+        }
+
+        FamilyEntity familyEntity;
+        if (personEntity.getParentId() == null) {
+            familyEntity = new FamilyEntity();
+            familyEntity.setFatherId(fatherId);
+            familyMapper.insert(familyEntity);
+
+            personEntity.setParentId(familyEntity.getFamilyId());
+            personMapper.updateById(personEntity);
+        } else {
+            familyEntity = familyService.getFamilyByFamilyId(personEntity.getParentId());
+            familyEntity.setFatherId(fatherId);
+            familyMapper.updateById(familyEntity);
+        }
+        return familyEntity.getFamilyId();
+    }
+
+    @Override
+    public int updateMotherOfPerson(Integer personId, Integer motherId) {
+        PersonEntity personEntity = getPersonById(personId);
+        if (personEntity == null || !personEntity.getPersonId().equals(personId)) {
+            return -1;
+        }
+
+        FamilyEntity familyEntity;
+        if (personEntity.getParentId() == null) {
+            familyEntity = new FamilyEntity();
+            familyEntity.setMotherId(motherId);
+            familyMapper.insert(familyEntity);
+
+            personEntity.setParentId(familyEntity.getFamilyId());
+            personMapper.updateById(personEntity);
+        } else {
+            familyEntity = familyService.getFamilyByFamilyId(personEntity.getParentId());
+            familyEntity.setMotherId(motherId);
+            familyMapper.updateById(familyEntity);
+        }
+        return familyEntity.getFamilyId();
+    }
+
+    @Override
+    public int updateSpouseOfPerson(Integer personId, Integer spouseId) {
+        PersonEntity personEntity = getPersonById(personId);
+        if (personEntity == null || !personEntity.getPersonId().equals(personId)) {
+            return -1;
+        }
+        personEntity.setSpouseId(spouseId);
+        personMapper.updateById(personEntity);
+
+        PersonEntity spouseEntity = getPersonById(spouseId);
+        spouseEntity.setSpouseId(personId);
+        personMapper.updateById(spouseEntity);
+        return spouseId;
     }
 }

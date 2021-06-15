@@ -30,8 +30,12 @@ public class FamilyServiceImpl implements FamilyService {
         return root;
     }
 
+    /**
+     * Use depth-first search to recursively find the person's parents
+     * @param root
+     */
     private void dfs(FamilyVO root) {
-        if (root == null) {
+        if (root == null || root.getPersonId() == null) {
             return;
         }
         PersonEntity personEntity = personService.getPersonById(root.getPersonId());
