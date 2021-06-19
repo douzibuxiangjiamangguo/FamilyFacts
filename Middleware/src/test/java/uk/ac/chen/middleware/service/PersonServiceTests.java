@@ -26,7 +26,7 @@ public class PersonServiceTests {
     @Test
     void testAddPerson() {
         String firstName = "test";
-        String lastName = "mother";
+        String lastName = "person";
         Integer sex = 0;
         Integer birthYear = 1920;
         Integer deathYear = 2010;
@@ -95,16 +95,29 @@ public class PersonServiceTests {
     }
 
     @Test
+    void testUpdatePerson() {
+        Integer personId = 136;
+        String firstName = "test2";
+        String lastName = "spouse";
+        String sex = "female";
+        Integer birthYear = 1920;
+        Integer deathYear = 2010;
+        String address = "Newcastle";
+        PersonVO personVO = new PersonVO(personId, firstName, lastName, sex, birthYear, deathYear, address);
+        personService.updatePerson(personVO);
+    }
+
+    @Test
     void testSearchPerson() {
-        String firstName = "test";
-        String lastName = "add2";
+        String firstName = "test2";
+        String lastName = "spouse";
         List<PersonEntity> persons = personService.getPersonByFullName(firstName, lastName);
         logger.info("persons: {}", persons);
     }
 
     @Test
     void testSearchPersonById() {
-        int personId = 135;
+        int personId = 136;
         PersonVO personVO = personService.getPersonVOById(personId);
         logger.info("personVo: {}", personVO);
     }

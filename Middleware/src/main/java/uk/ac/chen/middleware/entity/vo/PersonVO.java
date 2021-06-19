@@ -15,6 +15,7 @@ public class PersonVO {
     private Integer birth;
     private Integer death;
     private String address;
+    private PersonVO spouse;
 
     public PersonVO() {}
 

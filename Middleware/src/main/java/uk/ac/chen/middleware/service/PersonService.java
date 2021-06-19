@@ -101,6 +101,13 @@ public interface PersonService {
     int deletePersonById(Integer personId);
 
     /**
+     * Update person
+     * @param personVO
+     * @return
+     */
+    int updatePerson(PersonVO personVO);
+
+    /**
      * Update the father of a person whose father is already in the database.
      * @param personId
      * @param fatherId

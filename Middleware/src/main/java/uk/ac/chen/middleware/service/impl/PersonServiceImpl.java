@@ -108,12 +108,22 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonVO getPersonVOById(Integer personId) {
+        PersonVO personVo = setPersonVOById(personId);
+        PersonEntity person = getPersonById(personId);
+        if (personVo != null && person != null && person.getSpouseId() != null) {
+            PersonVO spouse = setPersonVOById(person.getSpouseId());
+            personVo.setSpouse(spouse);
+        }
+        return personVo;
+    }
+
+    private PersonVO setPersonVOById(Integer personId) {
         PersonEntity person = getPersonById(personId);
         if (person == null) {
-            return new PersonVO();
+            return null;
         }
         NameEntity fullName = nameService.getNameEntityByPersonId(personId);
-        String sex = person.getSex() == 0 ? "female" : "male";
+        String sex = person.getSex() == 0 ? "male" : "female";
         AddressEntity addressEntity = addressMapper.selectById(person.getLiving());
         String address = addressEntity == null ? " " : addressEntity.getName();
         if (fullName == null) {
@@ -175,6 +185,54 @@ public class PersonServiceImpl implements PersonService {
         }
 
         return personMapper.deleteById(personId);
+    }
+
+    @Override
+    public int updatePerson(PersonVO personVO) {
+        if (personVO.getPersonId() == null) {
+            return -1;
+        }
+        // person
+        PersonEntity personEntity = getPersonById(personVO.getPersonId());
+        if (personEntity == null || personEntity.getPersonId() == null) {
+            return -1;
+        }
+        String sex = personVO.getSex();
+        int sexCode = "male".equals(sex) ? 0 : 1;
+        personEntity.setSex(sexCode);
+        personMapper.updateById(personEntity);
+
+        // name
+        NameEntity nameEntity = nameService.getNameEntityByPersonId(personVO.getPersonId());
+        if (nameEntity == null) {
+            nameEntity = new NameEntity(personVO.getFirstName(), personVO.getLastName(),
+                    personVO.getPersonId(), personVO.getBirth(), personVO.getDeath());
+            nameMapper.insert(nameEntity);
+        } else {
+            nameEntity.setGiven(personVO.getFirstName());
+            nameEntity.setSurname(personVO.getLastName());
+            nameEntity.setBirthYear(personVO.getBirth());
+            nameEntity.setDeathYear(personVO.getDeath());
+            nameMapper.updateById(nameEntity);
+        }
+
+        // address
+        Integer living = personEntity.getLiving();
+        AddressEntity addressEntity = addressMapper.selectById(living);
+        if (addressEntity == null) {
+            addressEntity = new AddressEntity();
+            addressEntity.setName(personVO.getAddress());
+            addressMapper.insert(addressEntity);
+
+            AddressLinkEntity addressLinkEntity = new AddressLinkEntity();
+            addressLinkEntity.setAddressId(addressEntity.getAddressId());
+            addressLinkEntity.setOwnerId(personVO.getPersonId());
+            addressLinkMapper.insert(addressLinkEntity);
+        } else {
+            addressEntity.setName(personVO.getAddress());
+            addressMapper.updateById(addressEntity);
+        }
+        return personVO.getPersonId();
     }
 
     @Override

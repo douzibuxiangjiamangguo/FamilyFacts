@@ -73,6 +73,13 @@ public class PersonController {
         return id >= 0 ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
     }
 
+    @PostMapping("update/{person_id}")
+    public JsonResult updatePerson(@PathVariable("person_id") Integer personId,
+                                   @RequestBody PersonVO person) {
+        int id = personService.updatePerson(person);
+        return id == personId ? Result.success() : Result.fail(ResultCode.PERSON_NOT_FOUND);
+    }
+
     @PostMapping("update/father")
     public JsonResult updateFatherOfPerson(@RequestParam("person_id") Integer personId,
                                            @RequestParam("father_id") Integer fatherId) {
@@ -113,7 +120,7 @@ public class PersonController {
     @GetMapping("search/{person_id}")
     public JsonResult<PersonVO> getPersonById(@PathVariable("person_id") Integer personId) {
         PersonVO personVO = personService.getPersonVOById(personId);
-        if (personVO.getPersonId() == null) {
+        if (personVO == null || personVO.getPersonId() == null) {
             return Result.fail(ResultCode.PERSON_NOT_FOUND);
         } else {
             return Result.success(personVO);
