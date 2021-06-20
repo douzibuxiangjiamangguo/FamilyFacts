@@ -21,7 +21,7 @@ public class FamilyServiceTests {
 
     @Test
     void testGetFamilyTree() {
-        Integer personId = 7;
+        Integer personId = 135;
         FamilyVO familyVO = familyService.getFamilyTreeByPersonId(personId);
         logger.info("Family Tree: {}", familyVO);
     }

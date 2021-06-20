@@ -67,6 +67,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         if (!isExistDataSource(database)) {
             dynamicDataSource.getDataSourceMap().put(database, dataSource);
         }
+        dynamicDataSource.setDefaultTargetDataSource(dataSource);
         checkoutDataSource(database);
     }
 

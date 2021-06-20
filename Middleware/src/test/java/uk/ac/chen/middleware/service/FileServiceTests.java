@@ -18,14 +18,15 @@ public class FileServiceTests {
     void testCreateDatabase() {
         String databaseName = "";
         String databasePath = "/Users/chen/Desktop/Newcastle/Dissertation/" +
-                "code/FamilyFacts/Middleware/src/main/resources/sqlite/fileTest.db";
+                "code/FamilyFacts/Middleware/src/main/resources/sqlite/test.db";
         fileService.createDatabase(databaseName, databasePath);
     }
 
     @Test
     void testOpenDatabase() {
         String databasePath = "/Users/chen/Desktop/Newcastle/Dissertation/" +
-                "code/FamilyFacts/Middleware/src/main/resources/sqlite/init.db";
+                "code/FamilyFacts/Middleware/src/main/resources/sqlite/test.db";
+        // /Users/chen/Desktop/Newcastle/Dissertation/code/FamilyFacts/Middleware/src/main/resources/sqlite/test.db
         Assertions.assertTrue(fileService.openDatabase(null, databasePath));
     }
 

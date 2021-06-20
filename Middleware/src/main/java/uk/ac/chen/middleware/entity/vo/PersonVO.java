@@ -15,6 +15,9 @@ public class PersonVO {
     private Integer birth;
     private Integer death;
     private String address;
+    private PersonVO spouse;
+
+    public PersonVO() {}
 
     public PersonVO(Integer personId, String firstName, String lastName, String sex,
                     Integer birth, Integer death, String address) {

@@ -10,6 +10,7 @@ import uk.ac.chen.middleware.util.SqliteUtils;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -25,11 +26,18 @@ public class FileServiceImpl implements FileService {
         String dataSourceUrl = SqliteUtils.getDataSourceUrl(databaseName, databasePath);
         SqliteUtils.initSqliteFile(SqliteUtils.getFilePath(dataSourceUrl));
         DataSource dataSource = SqliteBuilder.create().url(dataSourceUrl).build();
+        Connection connection = null;
         try {
-            SqliteUtils.initDb(dataSource.getConnection());
+            connection = dataSource.getConnection();
+            SqliteUtils.initDb(connection);
         } catch (SQLException e) {
-            logger.debug("An error occurred during create database: {}", e.getMessage());
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         String[] strs = databasePath.split("/");
         databaseName = strs[strs.length - 1];
@@ -46,6 +54,19 @@ public class FileServiceImpl implements FileService {
             return false;
         }
         DataSource dataSource = SqliteBuilder.create().url(dataSourceUrl).build();
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            SqliteUtils.initDb(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         DynamicDataSource.addDataSource(databaseName, dataSource);
         return true;
     }

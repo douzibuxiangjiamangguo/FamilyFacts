@@ -24,12 +24,54 @@ public interface PersonService {
                   Integer birthYear, Integer deathYear, String address);
 
     /**
+     * Add person's spouse
+     * @param personId the person to whom the spouse has been added
+     * @param firstName first name
+     * @param lastName last name
+     * @param sex
+     * @param birthYear
+     * @param deathYear
+     * @param address
+     * @return person id
+     */
+    int addSpouse(Integer personId, String firstName, String lastName, Integer sex,
+                  Integer birthYear, Integer deathYear, String address);
+
+    /**
+     * Add person's father
+     * @param personId the person to whom the father has been added
+     * @param firstName first name
+     * @param lastName last name
+     * @param sex
+     * @param birthYear
+     * @param deathYear
+     * @param address
+     * @return person id
+     */
+    int addFather(Integer personId, String firstName, String lastName, Integer sex,
+                  Integer birthYear, Integer deathYear, String address);
+
+    /**
+     * Add person's mother
+     * @param personId the person to whom the mother has been added
+     * @param firstName first name
+     * @param lastName last name
+     * @param sex
+     * @param birthYear
+     * @param deathYear
+     * @param address
+     * @return person id
+     */
+    int addMother(Integer personId, String firstName, String lastName, Integer sex,
+                  Integer birthYear, Integer deathYear, String address);
+
+    /**
      * Get person by full name
      * @param firstName first name
      * @param lastName last name
-     * @return person entity
+     * @return person list
      */
-    PersonEntity getPersonByFullName(String firstName, String lastName);
+    List<PersonEntity> getPersonByFullName(String firstName, String lastName);
 
     /**
      * Get person by id
@@ -57,4 +99,35 @@ public interface PersonService {
      * @return
      */
     int deletePersonById(Integer personId);
+
+    /**
+     * Update person
+     * @param personVO
+     * @return
+     */
+    int updatePerson(PersonVO personVO);
+
+    /**
+     * Update the father of a person whose father is already in the database.
+     * @param personId
+     * @param fatherId
+     * @return family id
+     */
+    int updateFatherOfPerson(Integer personId, Integer fatherId);
+
+    /**
+     * Update the mother of a person whose mother is already in the database.
+     * @param personId
+     * @param motherId
+     * @return family id
+     */
+    int updateMotherOfPerson(Integer personId, Integer motherId);
+
+    /**
+     * Update the spouse of a person whose spouse is already in the database.
+     * @param personId
+     * @param spouseId
+     * @return spouse id
+     */
+    int updateSpouseOfPerson(Integer personId, Integer spouseId);
 }

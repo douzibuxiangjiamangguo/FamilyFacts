@@ -2,6 +2,8 @@ package uk.ac.chen.middleware.service;
 
 import uk.ac.chen.middleware.entity.NameEntity;
 
+import java.util.List;
+
 /**
  * @author: Qiuyu
  */
@@ -11,9 +13,9 @@ public interface NameService {
      * Get name entity by full name
      * @param firstName first name
      * @param lastName last name
-     * @return name entity
+     * @return name list
      */
-    NameEntity getNameEntityByFullName(String firstName, String lastName);
+    List<NameEntity> getNameListByFullName(String firstName, String lastName);
 
     /**
      * Get name entity by person id

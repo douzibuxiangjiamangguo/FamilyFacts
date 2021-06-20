@@ -2,12 +2,11 @@ package uk.ac.chen.middleware.service.impl;
 
 import org.springframework.stereotype.Service;
 import uk.ac.chen.middleware.entity.FamilyEntity;
-import uk.ac.chen.middleware.entity.NameEntity;
 import uk.ac.chen.middleware.entity.PersonEntity;
 import uk.ac.chen.middleware.entity.vo.FamilyVO;
+import uk.ac.chen.middleware.entity.vo.PersonVO;
 import uk.ac.chen.middleware.mapper.FamilyMapper;
 import uk.ac.chen.middleware.service.FamilyService;
-import uk.ac.chen.middleware.service.NameService;
 import uk.ac.chen.middleware.service.PersonService;
 
 import javax.annotation.Resource;
@@ -17,9 +16,6 @@ import javax.annotation.Resource;
  */
 @Service("FamilyService")
 public class FamilyServiceImpl implements FamilyService {
-
-    @Resource
-    private NameService nameService;
 
     @Resource
     private PersonService personService;
@@ -34,8 +30,12 @@ public class FamilyServiceImpl implements FamilyService {
         return root;
     }
 
+    /**
+     * Use depth-first search to recursively find the person's parents
+     * @param root
+     */
     private void dfs(FamilyVO root) {
-        if (root == null) {
+        if (root == null || root.getPersonId() == null) {
             return;
         }
         PersonEntity personEntity = personService.getPersonById(root.getPersonId());
@@ -54,10 +54,13 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     private FamilyVO getFamilyNode(Integer personId) {
+        PersonVO personVO = personService.getPersonVOById(personId);
+        if (personVO.getPersonId() == null) {
+            return new FamilyVO();
+        }
         FamilyVO node = new FamilyVO();
         node.setPersonId(personId);
-        NameEntity fullName = nameService.getNameEntityByPersonId(personId);
-        node.setFullName(fullName);
+        node.setPersonVO(personVO);
         return node;
     }
 

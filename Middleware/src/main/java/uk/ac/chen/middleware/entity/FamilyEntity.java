@@ -1,5 +1,6 @@
 package uk.ac.chen.middleware.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -21,7 +22,7 @@ public class FamilyEntity implements Serializable {
 
     private static final long serialVersionUID = 4070895159713354526L;
 
-    @TableId("FamilyID")
+    @TableId(value = "FamilyID", type = IdType.AUTO)
     private Integer familyId;
 
     @TableField("FatherID")
